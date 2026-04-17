@@ -1,4 +1,4 @@
-<div *ngIf="!isLoggedIn" class="login-page">
+<div *ngIf="currentView === 'login'" class="login-page">
   <div class="login-card">
     <div class="login-left">
       <img src="login-image.png" alt="Login Illustration" class="login-illustration" />
@@ -20,12 +20,72 @@
         [(ngModel)]="loginData.password"
       />
 
-      <button (click)="login()">Login now</button>
+      <button class="login-btn" (click)="login()">Login now</button>
+
+      <div class="register-link-text">
+        Don’t have an account?
+        <span class="register-link" (click)="goToRegister()">Register here</span>
+      </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="isLoggedIn" class="portfolio-page">
+<div *ngIf="currentView === 'register'" class="register-page">
+  <div class="register-card">
+    <h1>Register Account</h1>
+
+    <input
+      type="text"
+      placeholder="Full Name"
+      [(ngModel)]="registerData.fullName"
+    />
+
+    <input
+      type="text"
+      placeholder="Username"
+      [(ngModel)]="registerData.username"
+    />
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="registerData.email"
+    />
+
+    <input
+      type="text"
+      placeholder="Contact Number"
+      [(ngModel)]="registerData.contactNumber"
+    />
+
+    <input
+      type="text"
+      placeholder="Address"
+      [(ngModel)]="registerData.address"
+    />
+
+    <input
+      type="password"
+      placeholder="Password"
+      [(ngModel)]="registerData.password"
+    />
+
+    <input
+      type="password"
+      placeholder="Confirm Password"
+      [(ngModel)]="registerData.confirmPassword"
+    />
+
+    <button class="register-btn" (click)="register()">Register</button>
+
+    <div class="back-login-text">
+      Already have an account?
+      <span class="back-login-link" (click)="goToLogin()">Go to Login</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="currentView === 'portfolio'" class="portfolio-page">
   <div class="about-card">
     <h1>{{ profile.title }}</h1>
 

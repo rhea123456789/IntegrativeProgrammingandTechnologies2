@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+type ViewMode = 'login' | 'register' | 'portfolio';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -10,12 +12,32 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.css'
 })
 export class App {
-  isLoggedIn = false;
+  currentView: ViewMode = 'login';
 
   loginData = {
     email: '',
     password: ''
   };
+
+  registerData = {
+    fullName: '',
+    username: '',
+    email: '',
+    contactNumber: '',
+    address: '',
+    password: '',
+    confirmPassword: ''
+  };
+
+  registeredUser: {
+    fullName: string;
+    username: string;
+    email: string;
+    contactNumber: string;
+    address: string;
+    password: string;
+    confirmPassword: string;
+  } | null = null;
 
   profile = {
     title: 'About Me',
@@ -27,7 +49,38 @@ export class App {
     image: 'profile.jpg'
   };
 
+  goToLogin() {
+    this.currentView = 'login';
+  }
+
+  goToRegister() {
+    this.currentView = 'register';
+  }
+
+  register() {
+    this.registeredUser = {
+      fullName: this.registerData.fullName,
+      username: this.registerData.username,
+      email: this.registerData.email,
+      contactNumber: this.registerData.contactNumber,
+      address: this.registerData.address,
+      password: this.registerData.password,
+      confirmPassword: this.registerData.confirmPassword
+    };
+
+    this.loginData.email = this.registerData.email;
+    this.loginData.password = '';
+
+    this.currentView = 'login';
+  }
+
   login() {
-    this.isLoggedIn = true;
+    if (
+      this.registeredUser &&
+      this.loginData.email === this.registeredUser.email &&
+      this.loginData.password === this.registeredUser.password
+    ) {
+      this.currentView = 'portfolio';
+    }
   }
 }
