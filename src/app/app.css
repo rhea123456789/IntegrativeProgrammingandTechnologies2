@@ -77,7 +77,7 @@
   background: #e9e1f3;
   border-radius: 10px;
   padding: 0 16px;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
   font-size: 16px;
   color: #333;
 }
@@ -92,7 +92,7 @@
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .login-btn:hover {
@@ -112,6 +112,11 @@
   cursor: pointer;
 }
 
+.login-credentials-error {
+  text-align: center;
+  margin-top: 12px;
+}
+
 /* REGISTER PAGE WITH TABLE */
 .register-page {
   min-height: 100vh;
@@ -127,13 +132,13 @@
   max-width: 1340px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 60px;
   flex-wrap: wrap;
 }
 
 .register-card {
-  width: 440px;
+  width: 500px;
   background: rgba(210, 168, 241, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 28px;
@@ -160,7 +165,7 @@
   color: #5f5f5f;
   font-size: 15px;
   padding: 0 15px;
-  margin-bottom: 13px;
+  margin-bottom: 4px;
 }
 
 .register-btn {
@@ -173,7 +178,7 @@
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 12px;
   box-shadow: 0 6px 18px rgba(190, 113, 255, 0.35);
 }
 
@@ -182,12 +187,13 @@
 }
 
 .user-list-card {
-  width: 640px;
+  width: 690px;
   background: rgba(230, 209, 245, 0.62);
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 28px;
   padding: 38px 26px 26px;
   box-shadow: 0 0 32px rgba(201, 145, 255, 0.28);
+  margin-top: 88px;
 }
 
 .user-list-card h2 {
@@ -234,6 +240,13 @@
 
 .user-table tbody tr + tr td {
   border-top: 1px solid rgba(150, 120, 180, 0.12);
+}
+
+.field-error {
+  color: #ff4a4a;
+  font-size: 14px;
+  margin-bottom: 12px;
+  padding-left: 2px;
 }
 
 /* PORTFOLIO PAGE */
@@ -299,12 +312,17 @@
 @media (max-width: 1200px) {
   .register-layout {
     flex-direction: column;
+    align-items: center;
   }
 
   .user-list-card,
   .register-card {
     width: 100%;
     max-width: 700px;
+  }
+
+  .user-list-card {
+    margin-top: 0;
   }
 }
 

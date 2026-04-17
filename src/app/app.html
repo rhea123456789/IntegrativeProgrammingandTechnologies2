@@ -13,14 +13,20 @@
         placeholder="Email"
         [(ngModel)]="loginData.email"
       />
+      <div class="field-error" *ngIf="loginErrors.email">{{ loginErrors.email }}</div>
 
       <input
         type="password"
         placeholder="Password"
         [(ngModel)]="loginData.password"
       />
+      <div class="field-error" *ngIf="loginErrors.password">{{ loginErrors.password }}</div>
 
       <button class="login-btn" (click)="login()">Login now</button>
+
+      <div class="field-error login-credentials-error" *ngIf="loginErrors.credentials">
+        {{ loginErrors.credentials }}
+      </div>
 
       <div class="register-link-text">
         Don’t have an account?
@@ -40,42 +46,49 @@
         placeholder="Full Name"
         [(ngModel)]="registerData.fullName"
       />
+      <div class="field-error" *ngIf="registerErrors.fullName">{{ registerErrors.fullName }}</div>
 
       <input
         type="text"
         placeholder="Username"
         [(ngModel)]="registerData.username"
       />
+      <div class="field-error" *ngIf="registerErrors.username">{{ registerErrors.username }}</div>
 
       <input
         type="email"
         placeholder="Email"
         [(ngModel)]="registerData.email"
       />
+      <div class="field-error" *ngIf="registerErrors.email">{{ registerErrors.email }}</div>
 
       <input
         type="text"
         placeholder="Contact Number"
         [(ngModel)]="registerData.contactNumber"
       />
+      <div class="field-error" *ngIf="registerErrors.contactNumber">{{ registerErrors.contactNumber }}</div>
 
       <input
         type="text"
         placeholder="Address"
         [(ngModel)]="registerData.address"
       />
+      <div class="field-error" *ngIf="registerErrors.address">{{ registerErrors.address }}</div>
 
       <input
         type="password"
         placeholder="Password"
         [(ngModel)]="registerData.password"
       />
+      <div class="field-error" *ngIf="registerErrors.password">{{ registerErrors.password }}</div>
 
       <input
         type="password"
         placeholder="Confirm Password"
         [(ngModel)]="registerData.confirmPassword"
       />
+      <div class="field-error" *ngIf="registerErrors.confirmPassword">{{ registerErrors.confirmPassword }}</div>
 
       <button class="register-btn" (click)="register()">Register</button>
     </div>

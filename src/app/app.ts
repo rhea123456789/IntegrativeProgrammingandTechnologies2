@@ -42,37 +42,55 @@ export class App {
   users: UserItem[] = [
     {
       id: 1,
-      name: 'reyuh',
+      name: 'rhea',
       email: 'yame@gmail.com',
-      contact: '09223456797',
-      address: 'purok',
+      contact: 'N/A',
+      address: 'N/A',
+      status: 'Active',
+      password: '123456'
+    },
+    {
+      id: 2,
+      name: 'bebang',
+      email: 'bebang@gmail.com',
+      contact: 'N/A',
+      address: 'N/A',
       status: 'Active',
       password: '123456'
     },
     {
       id: 3,
-      name: 'reyami',
-      email: 'ame@gmail.com',
-      contact: '09389664248',
-      address: 'Tupazville',
+      name: 'mae',
+      email: 'mae@gmail.com',
+      contact: 'N/A',
+      address: 'N/A',
       status: 'Active',
       password: '123456'
     },
     {
       id: 4,
-      name: 'beshywap',
-      email: 'beshy@gmail.com',
-      contact: '09123456789',
-      address: 'bato',
+      name: 'reyah',
+      email: 'reyah@gmail.com',
+      contact: 'N/A',
+      address: 'N/A',
       status: 'Active',
       password: '123456'
     },
     {
       id: 5,
-      name: 'wei',
-      email: 'wei@gmail.com',
-      contact: '09178625342',
-      address: 'near but far',
+      name: 'anne',
+      email: 'anne@gmail.com',
+      contact: 'N/A',
+      address: 'N/A',
+      status: 'Active',
+      password: '123456'
+    },
+    {
+      id: 6,
+      name: 'hawak',
+      email: 'ang@gmail.com',
+      contact: '09365412889',
+      address: 'beat',
       status: 'Active',
       password: '123456'
     }
@@ -88,15 +106,139 @@ export class App {
     image: 'profile.jpg'
   };
 
+  loginErrors = {
+    email: '',
+    password: '',
+    credentials: ''
+  };
+
+  registerErrors = {
+    fullName: '',
+    username: '',
+    email: '',
+    contactNumber: '',
+    address: '',
+    password: '',
+    confirmPassword: ''
+  };
+
   goToLogin() {
     this.currentView = 'login';
+    this.clearLoginErrors();
   }
 
   goToRegister() {
     this.currentView = 'register';
+    this.clearRegisterErrors();
+  }
+
+  clearLoginErrors() {
+    this.loginErrors = {
+      email: '',
+      password: '',
+      credentials: ''
+    };
+  }
+
+  clearRegisterErrors() {
+    this.registerErrors = {
+      fullName: '',
+      username: '',
+      email: '',
+      contactNumber: '',
+      address: '',
+      password: '',
+      confirmPassword: ''
+    };
+  }
+
+  validateLogin(): boolean {
+    this.clearLoginErrors();
+    let isValid = true;
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!this.loginData.email.trim()) {
+      this.loginErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!emailPattern.test(this.loginData.email)) {
+      this.loginErrors.email = 'Invalid email format';
+      isValid = false;
+    }
+
+    if (!this.loginData.password.trim()) {
+      this.loginErrors.password = 'Password is required';
+      isValid = false;
+    } else if (this.loginData.password.length < 6) {
+      this.loginErrors.password = 'Password must be at least 6 characters';
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  validateRegister(): boolean {
+    this.clearRegisterErrors();
+    let isValid = true;
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const contactPattern = /^09\d{9}$/;
+
+    if (!this.registerData.fullName.trim()) {
+      this.registerErrors.fullName = 'Full Name is required';
+      isValid = false;
+    }
+
+    if (!this.registerData.username.trim()) {
+      this.registerErrors.username = 'Username is required';
+      isValid = false;
+    }
+
+    if (!this.registerData.email.trim()) {
+      this.registerErrors.email = 'Email is required';
+      isValid = false;
+    } else if (!emailPattern.test(this.registerData.email)) {
+      this.registerErrors.email = 'Invalid email format';
+      isValid = false;
+    }
+
+    if (!this.registerData.contactNumber.trim()) {
+      this.registerErrors.contactNumber = 'Contact Number is required';
+      isValid = false;
+    } else if (!contactPattern.test(this.registerData.contactNumber)) {
+      this.registerErrors.contactNumber = 'Contact must be 11 digits starting with 09';
+      isValid = false;
+    }
+
+    if (!this.registerData.address.trim()) {
+      this.registerErrors.address = 'Address is required';
+      isValid = false;
+    }
+
+    if (!this.registerData.password.trim()) {
+      this.registerErrors.password = 'Password is required';
+      isValid = false;
+    } else if (this.registerData.password.length < 6) {
+      this.registerErrors.password = 'Password must be at least 6 characters';
+      isValid = false;
+    }
+
+    if (!this.registerData.confirmPassword.trim()) {
+      this.registerErrors.confirmPassword = 'Confirm Password is required';
+      isValid = false;
+    } else if (this.registerData.password !== this.registerData.confirmPassword) {
+      this.registerErrors.confirmPassword = 'Passwords do not match';
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   register() {
+    if (!this.validateRegister()) {
+      return;
+    }
+
     const nextId =
       this.users.length > 0
         ? Math.max(...this.users.map(user => user.id)) + 1
@@ -127,10 +269,15 @@ export class App {
       confirmPassword: ''
     };
 
+    this.clearRegisterErrors();
     this.currentView = 'login';
   }
 
   login() {
+    if (!this.validateLogin()) {
+      return;
+    }
+
     const matchedUser = this.users.find(
       user =>
         user.email === this.loginData.email &&
@@ -138,7 +285,10 @@ export class App {
     );
 
     if (matchedUser) {
+      this.loginErrors.credentials = '';
       this.currentView = 'portfolio';
+    } else {
+      this.loginErrors.credentials = 'Invalid credentials';
     }
   }
 }
