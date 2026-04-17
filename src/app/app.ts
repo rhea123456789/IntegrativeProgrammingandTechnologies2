@@ -1,14 +1,22 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
+  isLoggedIn = false;
+
+  loginData = {
+    email: '',
+    password: ''
+  };
+
   profile = {
     title: 'About Me',
     name: 'Rhea Mae C. Aldamia',
@@ -18,4 +26,8 @@ export class App {
     skills: 'I’m skilled at online research and learning. Basically, I can’t study without Wi-Fi.',
     image: 'profile.jpg'
   };
+
+  login() {
+    this.isLoggedIn = true;
+  }
 }

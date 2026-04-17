@@ -1,4 +1,31 @@
-<div class="page">
+<div *ngIf="!isLoggedIn" class="login-page">
+  <div class="login-card">
+    <div class="login-left">
+      <img src="login-image.png" alt="Login Illustration" class="login-illustration" />
+    </div>
+
+    <div class="login-right">
+      <h1>Let’s sign you in.</h1>
+      <p>Welcome back to your account</p>
+
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="loginData.email"
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="loginData.password"
+      />
+
+      <button (click)="login()">Login now</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoggedIn" class="portfolio-page">
   <div class="about-card">
     <h1>{{ profile.title }}</h1>
 
