@@ -1,4 +1,4 @@
-<div *ngIf="!isLoggedIn" class="login-page">
+<div *ngIf="currentView === 'login'" class="login-page">
   <div class="login-card">
     <div class="login-left">
       <img src="login-image.png" alt="Login Illustration" class="login-illustration" />
@@ -20,12 +20,121 @@
         [(ngModel)]="loginData.password"
       />
 
-      <button (click)="login()">Login now</button>
+      <button class="login-btn" (click)="login()" [disabled]="isLoginButtonDisabled()">
+        Login now
+      </button>
+
+      <!-- Success message -->
+      <div *ngIf="successMessage" class="login-success-message">
+        {{ successMessage }}
+      </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="isLoggedIn" class="portfolio-page">
+<!-- Register Page (unchanged) -->
+<div *ngIf="currentView === 'register'" class="register-page">
+  <div class="register-layout">
+    <div class="register-card">
+      <h1>{{ isEditMode ? 'Edit User' : 'Add User' }}</h1>
+
+      <input
+        type="text"
+        placeholder="Full Name"
+        [(ngModel)]="registerData.fullName"
+      />
+
+      <input
+        type="text"
+        placeholder="Username"
+        [(ngModel)]="registerData.username"
+      />
+
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="registerData.email"
+      />
+
+      <input
+        type="text"
+        placeholder="Contact Number"
+        [(ngModel)]="registerData.contactNumber"
+      />
+
+      <input
+        type="text"
+        placeholder="Address"
+        [(ngModel)]="registerData.address"
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="registerData.password"
+      />
+
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        [(ngModel)]="registerData.confirmPassword"
+      />
+
+      <button class="register-btn" (click)="register()">
+        {{ isEditMode ? 'Update User' : 'Add User' }}
+      </button>
+    </div>
+
+    <div class="user-list-card">
+      <h2>User List</h2>
+
+      <div class="search-wrap">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search by name, username, or email"
+          [(ngModel)]="searchTerm"
+        />
+      </div>
+
+      <div class="user-table-wrap">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Address</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let user of filteredUsers">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.contact }}</td>
+              <td>{{ user.address }}</td>
+              <td>
+                <span class="status-badge">{{ user.status }}</span>
+              </td>
+              <td class="action-cell">
+                <button class="edit-btn" (click)="editUser(user)">Edit</button>
+                <button class="delete-btn" (click)="deleteUser(user.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Portfolio Page (unchanged) -->
+<div *ngIf="currentView === 'portfolio'" class="portfolio-page">
   <div class="about-card">
     <h1>{{ profile.title }}</h1>
 
