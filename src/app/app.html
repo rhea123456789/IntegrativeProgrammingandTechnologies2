@@ -31,56 +31,81 @@
 </div>
 
 <div *ngIf="currentView === 'register'" class="register-page">
-  <div class="register-card">
-    <h1>Register Account</h1>
+  <div class="register-layout">
+    <div class="register-card">
+      <h1>Register Account</h1>
 
-    <input
-      type="text"
-      placeholder="Full Name"
-      [(ngModel)]="registerData.fullName"
-    />
+      <input
+        type="text"
+        placeholder="Full Name"
+        [(ngModel)]="registerData.fullName"
+      />
 
-    <input
-      type="text"
-      placeholder="Username"
-      [(ngModel)]="registerData.username"
-    />
+      <input
+        type="text"
+        placeholder="Username"
+        [(ngModel)]="registerData.username"
+      />
 
-    <input
-      type="email"
-      placeholder="Email"
-      [(ngModel)]="registerData.email"
-    />
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="registerData.email"
+      />
 
-    <input
-      type="text"
-      placeholder="Contact Number"
-      [(ngModel)]="registerData.contactNumber"
-    />
+      <input
+        type="text"
+        placeholder="Contact Number"
+        [(ngModel)]="registerData.contactNumber"
+      />
 
-    <input
-      type="text"
-      placeholder="Address"
-      [(ngModel)]="registerData.address"
-    />
+      <input
+        type="text"
+        placeholder="Address"
+        [(ngModel)]="registerData.address"
+      />
 
-    <input
-      type="password"
-      placeholder="Password"
-      [(ngModel)]="registerData.password"
-    />
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="registerData.password"
+      />
 
-    <input
-      type="password"
-      placeholder="Confirm Password"
-      [(ngModel)]="registerData.confirmPassword"
-    />
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        [(ngModel)]="registerData.confirmPassword"
+      />
 
-    <button class="register-btn" (click)="register()">Register</button>
+      <button class="register-btn" (click)="register()">Register</button>
+    </div>
 
-    <div class="back-login-text">
-      Already have an account?
-      <span class="back-login-link" (click)="goToLogin()">Go to Login</span>
+    <div class="user-list-card">
+      <h2>User List</h2>
+
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.contact }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.status }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

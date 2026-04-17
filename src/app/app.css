@@ -112,23 +112,32 @@
   cursor: pointer;
 }
 
-/* REGISTER PAGE */
+/* REGISTER PAGE WITH TABLE */
 .register-page {
   min-height: 100vh;
-  background: linear-gradient(to right, #eadcf5, #cfb4f0);
+  background: linear-gradient(to right, #eadcf5 0%, #cfb4f0 100%);
+  padding: 80px 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+}
+
+.register-layout {
+  width: 100%;
+  max-width: 1340px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  flex-wrap: wrap;
 }
 
 .register-card {
   width: 440px;
-  max-width: 100%;
   background: rgba(210, 168, 241, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 28px;
-  padding: 40px 28px 26px;
+  padding: 40px 38px 34px;
   box-shadow: 0 0 40px rgba(193, 126, 255, 0.45);
   backdrop-filter: blur(3px);
 }
@@ -137,7 +146,7 @@
   text-align: center;
   font-size: 30px;
   color: #111111;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
   font-weight: 800;
 }
 
@@ -147,7 +156,7 @@
   border: none;
   outline: none;
   border-radius: 12px;
-  background: rgba(245, 234, 251, 0.9);
+  background: rgba(245, 234, 251, 0.92);
   color: #5f5f5f;
   font-size: 15px;
   padding: 0 15px;
@@ -156,7 +165,7 @@
 
 .register-btn {
   width: 100%;
-  height: 50px;
+  height: 52px;
   border: none;
   border-radius: 999px;
   background: linear-gradient(to right, #d6a7ff, #b670f0);
@@ -172,17 +181,59 @@
   opacity: 0.96;
 }
 
-.back-login-text {
-  margin-top: 16px;
-  text-align: center;
-  font-size: 14px;
-  color: #5d5d5d;
+.user-list-card {
+  width: 640px;
+  background: rgba(230, 209, 245, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  padding: 38px 26px 26px;
+  box-shadow: 0 0 32px rgba(201, 145, 255, 0.28);
 }
 
-.back-login-link {
-  color: #7a2ccc;
+.user-list-card h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #4f316a;
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+.user-table thead th {
+  background: linear-gradient(to right, #c88df4, #b36ef0);
+  color: white;
+  font-size: 16px;
   font-weight: 700;
-  cursor: pointer;
+  padding: 11px 10px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.user-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.user-table thead th:last-child {
+  border-top-right-radius: 8px;
+  border-right: none;
+}
+
+.user-table tbody td {
+  background: rgba(255, 255, 255, 0.55);
+  color: #222;
+  font-size: 15px;
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.user-table tbody tr + tr td {
+  border-top: 1px solid rgba(150, 120, 180, 0.12);
 }
 
 /* PORTFOLIO PAGE */
@@ -245,6 +296,18 @@
   font-weight: bold;
 }
 
+@media (max-width: 1200px) {
+  .register-layout {
+    flex-direction: column;
+  }
+
+  .user-list-card,
+  .register-card {
+    width: 100%;
+    max-width: 700px;
+  }
+}
+
 @media (max-width: 900px) {
   .login-card {
     grid-template-columns: 1fr;
@@ -264,5 +327,17 @@
 
   .login-btn {
     width: 100%;
+  }
+
+  .register-page {
+    padding: 30px 16px;
+  }
+
+  .user-list-card {
+    overflow-x: auto;
+  }
+
+  .user-table {
+    min-width: 620px;
   }
 }
