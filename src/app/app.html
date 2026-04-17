@@ -39,7 +39,7 @@
 <div *ngIf="currentView === 'register'" class="register-page">
   <div class="register-layout">
     <div class="register-card">
-      <h1>Register Account</h1>
+      <h1>{{ isEditMode ? 'Edit User' : 'Add User' }}</h1>
 
       <input
         type="text"
@@ -90,35 +90,55 @@
       />
       <div class="field-error" *ngIf="registerErrors.confirmPassword">{{ registerErrors.confirmPassword }}</div>
 
-      <button class="register-btn" (click)="register()">Register</button>
+      <button class="register-btn" (click)="register()">
+        {{ isEditMode ? 'Update User' : 'Add User' }}
+      </button>
     </div>
 
     <div class="user-list-card">
       <h2>User List</h2>
 
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Contact</th>
-            <th>Address</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div class="search-wrap">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search by name, username, or email"
+          [(ngModel)]="searchTerm"
+        />
+      </div>
 
-        <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.contact }}</td>
-            <td>{{ user.address }}</td>
-            <td>{{ user.status }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="user-table-wrap">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Address</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let user of filteredUsers">
+              <td>{{ user.id }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.contact }}</td>
+              <td>{{ user.address }}</td>
+              <td>
+                <span class="status-badge">{{ user.status }}</span>
+              </td>
+              <td class="action-cell">
+                <button class="edit-btn" (click)="editUser(user)">Edit</button>
+                <button class="delete-btn" (click)="deleteUser(user.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

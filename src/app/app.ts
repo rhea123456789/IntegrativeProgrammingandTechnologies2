@@ -6,7 +6,8 @@ type ViewMode = 'login' | 'register' | 'portfolio';
 
 interface UserItem {
   id: number;
-  name: string;
+  fullName: string;
+  username: string;
   email: string;
   contact: string;
   address: string;
@@ -39,10 +40,15 @@ export class App {
     confirmPassword: ''
   };
 
+  searchTerm = '';
+  isEditMode = false;
+  editingUserId: number | null = null;
+
   users: UserItem[] = [
     {
       id: 1,
-      name: 'rhea',
+      fullName: 'reyami',
+      username: 'reyami',
       email: 'yame@gmail.com',
       contact: 'N/A',
       address: 'N/A',
@@ -51,8 +57,9 @@ export class App {
     },
     {
       id: 2,
-      name: 'bebang',
-      email: 'bebang@gmail.com',
+      fullName: 'rhey',
+      username: 'rhey',
+      email: 'user@gmail.com',
       contact: 'N/A',
       address: 'N/A',
       status: 'Active',
@@ -60,37 +67,11 @@ export class App {
     },
     {
       id: 3,
-      name: 'mae',
-      email: 'mae@gmail.com',
-      contact: 'N/A',
-      address: 'N/A',
-      status: 'Active',
-      password: '123456'
-    },
-    {
-      id: 4,
-      name: 'reyah',
-      email: 'reyah@gmail.com',
-      contact: 'N/A',
-      address: 'N/A',
-      status: 'Active',
-      password: '123456'
-    },
-    {
-      id: 5,
-      name: 'anne',
-      email: 'anne@gmail.com',
-      contact: 'N/A',
-      address: 'N/A',
-      status: 'Active',
-      password: '123456'
-    },
-    {
-      id: 6,
-      name: 'hawak',
-      email: 'ang@gmail.com',
-      contact: '09365412889',
-      address: 'beat',
+      fullName: 'reyami',
+      username: 'reyami',
+      email: 'ame@gmail.com',
+      contact: '09389664248',
+      address: 'Tupazville',
       status: 'Active',
       password: '123456'
     }
@@ -122,6 +103,20 @@ export class App {
     confirmPassword: ''
   };
 
+  get filteredUsers(): UserItem[] {
+    const term = this.searchTerm.trim().toLowerCase();
+
+    if (!term) {
+      return this.users;
+    }
+
+    return this.users.filter(user =>
+      user.fullName.toLowerCase().includes(term) ||
+      user.username.toLowerCase().includes(term) ||
+      user.email.toLowerCase().includes(term)
+    );
+  }
+
   goToLogin() {
     this.currentView = 'login';
     this.clearLoginErrors();
@@ -150,6 +145,22 @@ export class App {
       password: '',
       confirmPassword: ''
     };
+  }
+
+  resetRegisterForm() {
+    this.registerData = {
+      fullName: '',
+      username: '',
+      email: '',
+      contactNumber: '',
+      address: '',
+      password: '',
+      confirmPassword: ''
+    };
+
+    this.isEditMode = false;
+    this.editingUserId = null;
+    this.clearRegisterErrors();
   }
 
   validateLogin(): boolean {
@@ -239,6 +250,25 @@ export class App {
       return;
     }
 
+    if (this.isEditMode && this.editingUserId !== null) {
+      const userIndex = this.users.findIndex(user => user.id === this.editingUserId);
+
+      if (userIndex !== -1) {
+        this.users[userIndex] = {
+          ...this.users[userIndex],
+          fullName: this.registerData.fullName,
+          username: this.registerData.username,
+          email: this.registerData.email,
+          contact: this.registerData.contactNumber,
+          address: this.registerData.address,
+          password: this.registerData.password
+        };
+      }
+
+      this.resetRegisterForm();
+      return;
+    }
+
     const nextId =
       this.users.length > 0
         ? Math.max(...this.users.map(user => user.id)) + 1
@@ -246,7 +276,8 @@ export class App {
 
     const newUser: UserItem = {
       id: nextId,
-      name: this.registerData.username || this.registerData.fullName,
+      fullName: this.registerData.fullName,
+      username: this.registerData.username,
       email: this.registerData.email,
       contact: this.registerData.contactNumber,
       address: this.registerData.address,
@@ -259,18 +290,33 @@ export class App {
     this.loginData.email = this.registerData.email;
     this.loginData.password = '';
 
+    this.resetRegisterForm();
+  }
+
+  editUser(user: UserItem) {
+    this.currentView = 'register';
+    this.isEditMode = true;
+    this.editingUserId = user.id;
+
     this.registerData = {
-      fullName: '',
-      username: '',
-      email: '',
-      contactNumber: '',
-      address: '',
-      password: '',
-      confirmPassword: ''
+      fullName: user.fullName,
+      username: user.username,
+      email: user.email,
+      contactNumber: user.contact === 'N/A' ? '' : user.contact,
+      address: user.address === 'N/A' ? '' : user.address,
+      password: user.password,
+      confirmPassword: user.password
     };
 
     this.clearRegisterErrors();
-    this.currentView = 'login';
+  }
+
+  deleteUser(id: number) {
+    this.users = this.users.filter(user => user.id !== id);
+
+    if (this.editingUserId === id) {
+      this.resetRegisterForm();
+    }
   }
 
   login() {
